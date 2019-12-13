@@ -1,6 +1,7 @@
 package jp.co.soramitsu.iroha.java;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import iroha.protocol.Primitive;
 import iroha.protocol.TransactionOuterClass;
 import iroha.protocol.TransactionOuterClass.Transaction.Payload;
 import iroha.protocol.TransactionOuterClass.Transaction.Payload.BatchMeta;
@@ -55,6 +56,12 @@ public class Transaction
   public BuildableAndSignable<TransactionOuterClass.Transaction> sign(KeyPair keyPair) {
     updatePayload();
     tx.addSignatures(Utils.sign(this, keyPair));
+    return this;
+  }
+
+  public BuildableAndSignable<TransactionOuterClass.Transaction> addSignature(Primitive.Signature signature) {
+    updatePayload();
+    tx.addSignatures(signature);
     return this;
   }
 
